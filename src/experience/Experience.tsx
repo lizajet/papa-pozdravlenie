@@ -115,7 +115,7 @@ export function Experience() {
     <main className={`experience scene scene--${scene.id}`}>
       <div
         className={`scene__art scene__art--${scene.background}`}
-        style={{ backgroundImage: `url(${assetBasePath}/art/${scene.background === "trail" ? "ural-dawn-trail" : "liza-sunrise-meeting-v4"}.jpg)` }}
+        style={{ backgroundImage: `url(${assetBasePath}/art/${scene.background === "trail" ? "ural-dawn-trail" : "liza-sunrise-meeting-v5"}.jpg)` }}
         aria-hidden="true"
       />
       <div className="scene__vignette" aria-hidden="true" />
