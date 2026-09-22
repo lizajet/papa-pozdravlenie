@@ -126,13 +126,12 @@ export function Experience() {
       </header>
 
       {scene.id === "trail" && (
-        <div className="traveller" aria-label="Папа идёт по тропе">
-          <span className="traveller__head" />
-          <span className="traveller__body" />
-          <span className="traveller__pack" />
-          <span className="traveller__leg traveller__leg--one" />
-          <span className="traveller__leg traveller__leg--two" />
-          <span className="traveller__shadow" />
+        <div className="traveller" role="img" aria-label="Папа идёт по тропе">
+          <span
+            className="traveller__sprite"
+            style={{ backgroundImage: `url(${assetBasePath}/characters/hero-walk-v1.png)` }}
+            aria-hidden="true"
+          />
         </div>
       )}
 
