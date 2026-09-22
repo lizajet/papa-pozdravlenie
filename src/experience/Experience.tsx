@@ -115,7 +115,7 @@ export function Experience() {
     <main className={`experience scene scene--${scene.id}`}>
       <div
         className={`scene__art scene__art--${scene.background}`}
-        style={{ backgroundImage: `url(${assetBasePath}/art/${scene.background === "trail" ? "ural-dawn-trail" : "liza-sunrise-meeting"}.jpg)` }}
+        style={{ backgroundImage: `url(${assetBasePath}/art/${scene.background === "trail" ? "ural-dawn-trail" : "liza-sunrise-meeting-v4"}.jpg)` }}
         aria-hidden="true"
       />
       <div className="scene__vignette" aria-hidden="true" />
@@ -138,7 +138,12 @@ export function Experience() {
 
       {scene.id === "message" ? (
         <section className="letter" aria-labelledby="letter-title">
-          <div className="letter__portrait" aria-hidden="true"><span>Л</span></div>
+          <div
+            className="letter__portrait"
+            style={{ backgroundImage: `url(${assetBasePath}/people/liza-portrait-v1.jpg)` }}
+            role="img"
+            aria-label="Портрет Лизы"
+          />
           <div className="letter__content">
             <p className="eyebrow">{scene.eyebrow}</p>
             <h1 id="letter-title">{scene.title}</h1>
