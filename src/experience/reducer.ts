@@ -42,6 +42,10 @@ export const sceneOrder: SceneId[] = [
   "yarik-message",
   "yarik-achievements",
   "yarik-farewell",
+  "family-trail",
+  "family-reunion",
+  "family-moment",
+  "hall-of-fame",
 ];
 
 const lastSceneIndex = sceneOrder.length - 1;

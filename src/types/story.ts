@@ -24,7 +24,11 @@ export type SceneId =
   | "yarik-meeting"
   | "yarik-message"
   | "yarik-achievements"
-  | "yarik-farewell";
+  | "yarik-farewell"
+  | "family-trail"
+  | "family-reunion"
+  | "family-moment"
+  | "hall-of-fame";
 
 export type SceneKind =
   | "opening"
@@ -32,7 +36,8 @@ export type SceneKind =
   | "meeting"
   | "message"
   | "achievements"
-  | "farewell";
+  | "farewell"
+  | "hall";
 
 export type Scene = {
   id: SceneId;

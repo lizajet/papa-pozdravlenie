@@ -4,10 +4,18 @@ import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "r
 import { achievements, scenes } from "@/content/story";
 import { ContinueButton } from "@/components/ContinueButton";
 import { OrientationGate } from "@/components/OrientationGate";
+import type { Achievement } from "@/types/story";
 import { initialState, reducer, sceneOrder } from "./reducer";
 
 const storageKey = "papa-pozdravlenie:story-progress-v2";
 const assetBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const authorGenitive: Record<Achievement["author"], string> = {
+  Лиза: "Лизы",
+  Соня: "Сони",
+  Тая: "Таи",
+  Фадей: "Фадея",
+  Ярик: "Ярика",
+};
 
 function assetUrl(path: string) {
   return `${assetBasePath}${path}`;
@@ -46,7 +54,7 @@ export function Experience() {
   }, [scene.id, state.started]);
 
   const continueStory = useCallback(() => {
-    if (scene.id === "yarik-farewell") {
+    if (scene.id === "hall-of-fame") {
       window.localStorage.removeItem(storageKey);
       dispatch({ type: "RESTART" });
       return;
@@ -58,7 +66,9 @@ export function Experience() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && state.selectedAchievementId) {
         dispatch({ type: "CLOSE_ACHIEVEMENT" });
-      } else if (event.key === "Enter" && state.started && !state.selectedAchievementId && scene.kind !== "travel") {
+      } else if (event.target instanceof HTMLElement && event.target.closest("button, input")) {
+        return;
+      } else if (event.key === "Enter" && state.started && !state.selectedAchievementId && scene.kind !== "travel" && scene.kind !== "hall") {
         continueStory();
       }
     };
@@ -245,6 +255,29 @@ export function Experience() {
           </div>
           <ContinueButton onClick={continueStory}>{scene.action}</ContinueButton>
         </section>
+      ) : scene.kind === "hall" ? (
+        <section className="hall" aria-labelledby="hall-title">
+          <div className="hall__intro">
+            <p className="eyebrow">{scene.eyebrow}</p>
+            <h1 id="hall-title">{scene.title}</h1>
+            <p>{scene.body}</p>
+          </div>
+          <div className="hall__collection" aria-label="Десять ачивок от детей">
+            {sceneAchievements.map((achievement) => (
+              <button
+                className="hall__achievement"
+                key={achievement.id}
+                onClick={() => dispatch({ type: "OPEN_ACHIEVEMENT", id: achievement.id })}
+                aria-label={`${achievement.title}, от ${authorGenitive[achievement.author]}. Открыть описание`}
+              >
+                <span className="hall__symbol" aria-hidden="true">{achievement.symbol}</span>
+                <span className="hall__name">{achievement.title}</span>
+                <small>{achievement.author}</small>
+              </button>
+            ))}
+          </div>
+          <ContinueButton onClick={continueStory} light>{scene.action}</ContinueButton>
+        </section>
       ) : scene.kind === "achievements" ? (
         <section className="achievement-scene">
           <div className="achievement-scene__intro">
@@ -275,18 +308,20 @@ export function Experience() {
           <ContinueButton onClick={continueStory} light={scene.kind !== "opening"}>
             {scene.action}
           </ContinueButton>
-          {scene.id === "yarik-farewell" && <small className="prototype-note">Финальная глава появится следующим этапом</small>}
         </section>
       )}
 
       {selectedAchievement && (
-        <div className="achievement-modal" role="dialog" aria-modal="true" aria-labelledby="achievement-title">
-          <button className="achievement-modal__close" onClick={() => dispatch({ type: "CLOSE_ACHIEVEMENT" })} aria-label="Закрыть">×</button>
-          <span className="achievement-modal__medal" aria-hidden="true">{selectedAchievement.symbol}</span>
-          <p className="eyebrow">Ачивка от {selectedAchievement.author}</p>
-          <h2 id="achievement-title">{selectedAchievement.title}</h2>
-          <p>{selectedAchievement.description}</p>
-        </div>
+        <>
+          <div className="achievement-backdrop" onClick={() => dispatch({ type: "CLOSE_ACHIEVEMENT" })} aria-hidden="true" />
+          <div className="achievement-modal" role="dialog" aria-modal="true" aria-labelledby="achievement-title">
+            <button className="achievement-modal__close" onClick={() => dispatch({ type: "CLOSE_ACHIEVEMENT" })} aria-label="Закрыть">×</button>
+            <span className="achievement-modal__medal" aria-hidden="true">{selectedAchievement.symbol}</span>
+            <p className="eyebrow">Ачивка от {authorGenitive[selectedAchievement.author]}</p>
+            <h2 id="achievement-title">{selectedAchievement.title}</h2>
+            <p>{selectedAchievement.description}</p>
+          </div>
+        </>
       )}
 
         <OrientationGate />
