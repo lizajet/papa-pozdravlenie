@@ -124,13 +124,20 @@ export function Experience() {
       />
       <div className="scene__vignette" aria-hidden="true" />
       <div className="scene__grain" aria-hidden="true" />
-      <header className="scene__header">
-        <span>Андрей · один большой день</span>
-        <span>{String(state.sceneIndex + 1).padStart(2, "0")} / {String(scenes.length).padStart(2, "0")}</span>
-      </header>
+      {scene.id !== "trail" && (
+        <header className="scene__header">
+          <span>Андрей · один большой день</span>
+          <span>{String(state.sceneIndex + 1).padStart(2, "0")} / {String(scenes.length).padStart(2, "0")}</span>
+        </header>
+      )}
 
       {scene.id === "trail" && (
-        <div className="traveller" role="img" aria-label="Папа идёт по тропе">
+        <div
+          className="traveller"
+          role="img"
+          aria-label="Папа идёт по тропе к Лизе"
+          onAnimationEnd={() => dispatch({ type: "CONTINUE" })}
+        >
           <span
             className="traveller__sprite"
             style={{ backgroundImage: `url(${assetBasePath}/characters/hero-walk-v1.png)` }}
@@ -139,7 +146,7 @@ export function Experience() {
         </div>
       )}
 
-      {scene.id === "message" ? (
+      {scene.id === "trail" ? null : scene.id === "message" ? (
         <section className="letter" aria-labelledby="letter-title">
           <div
             className="letter__portrait"
@@ -184,7 +191,7 @@ export function Experience() {
           <p className="eyebrow">{scene.eyebrow}</p>
           <h1>{scene.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h1>
           {scene.body && <p className="scene-copy__body">{scene.body}</p>}
-          <ContinueButton onClick={continueStory} light={scene.id !== "opening" && scene.id !== "trail"}>
+          <ContinueButton onClick={continueStory} light={scene.id !== "opening"}>
             {scene.action}
           </ContinueButton>
           {scene.id === "farewell" && <small className="prototype-note">Продолжение пути появится в следующей главе</small>}
