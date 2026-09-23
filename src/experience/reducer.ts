@@ -37,6 +37,11 @@ export const sceneOrder: SceneId[] = [
   "fadey-message",
   "fadey-achievements",
   "fadey-farewell",
+  "yarik-trail",
+  "yarik-meeting",
+  "yarik-message",
+  "yarik-achievements",
+  "yarik-farewell",
 ];
 
 const lastSceneIndex = sceneOrder.length - 1;

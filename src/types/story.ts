@@ -19,7 +19,12 @@ export type SceneId =
   | "fadey-meeting"
   | "fadey-message"
   | "fadey-achievements"
-  | "fadey-farewell";
+  | "fadey-farewell"
+  | "yarik-trail"
+  | "yarik-meeting"
+  | "yarik-message"
+  | "yarik-achievements"
+  | "yarik-farewell";
 
 export type SceneKind =
   | "opening"
@@ -37,17 +42,17 @@ export type Scene = {
   body?: string;
   action: string;
   art: string;
-  author?: "Лиза" | "Соня" | "Тая" | "Фадей";
+  author?: "Лиза" | "Соня" | "Тая" | "Фадей" | "Ярик";
   portrait?: string;
   sign?: string;
   achievementIds?: string[];
-  traveller?: "walker" | "skier" | "swimmer" | "cyclist";
+  traveller?: "walker" | "skier" | "swimmer" | "cyclist" | "runner";
   travellerLabel?: string;
 };
 
 export type Achievement = {
   id: string;
-  author: "Лиза" | "Соня" | "Тая" | "Фадей";
+  author: "Лиза" | "Соня" | "Тая" | "Фадей" | "Ярик";
   title: string;
   description: string;
   symbol: string;

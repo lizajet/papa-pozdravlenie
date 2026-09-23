@@ -77,6 +77,14 @@ button { color: inherit; }
 .scene--fadey-farewell .scene__vignette { background: linear-gradient(270deg, rgba(13,31,30,.62), transparent 52%), linear-gradient(0deg, rgba(45,35,20,.38), transparent 58%); }
 .scene--fadey-farewell .scene-copy { left: auto; right: max(6vw, calc(24px + env(safe-area-inset-right))); }
 .scene--fadey-farewell::after { content: ""; position: absolute; z-index: 1; inset: 0; pointer-events: none; background: linear-gradient(12deg, rgba(202,139,68,.32), transparent 46%), radial-gradient(ellipse at 72% 84%, rgba(240,188,107,.34), transparent 27%); animation: mountain-dust 3.5s ease-in-out infinite; }
+.scene:is(.scene--yarik-trail, .scene--yarik-meeting, .scene--yarik-message, .scene--yarik-achievements, .scene--yarik-farewell) .scene__vignette {
+  background:
+    linear-gradient(90deg, rgba(39,24,27,.64), transparent 50%, rgba(48,27,29,.08)),
+    linear-gradient(0deg, rgba(45,25,23,.42), transparent 60%);
+}
+.scene--yarik-trail .scene__art { background-position: 50% 53%; }
+.scene--yarik-meeting .scene__art { background-position: 52% 50%; }
+.scene--yarik-farewell::after { content: ""; position: absolute; z-index: 1; inset: 0; pointer-events: none; background: radial-gradient(circle at 92% 73%, rgba(255,198,88,.5), rgba(255,157,70,.14) 8%, transparent 22%); animation: lantern-glow 3.2s ease-in-out infinite; }
 .scene__grain { pointer-events: none; opacity: .1; mix-blend-mode: soft-light; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); }
 .scene__header { position: absolute; z-index: 3; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: calc(14px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) 0 calc(22px + env(safe-area-inset-left)); color: #fff6e5cc; font-size: clamp(8px, 1.15vw, 11px); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 
@@ -109,6 +117,9 @@ button { color: inherit; }
 .cyclist { position: absolute; z-index: 2; right: 0; bottom: -20%; height: min(68svh, 294px); aspect-ratio: 3 / 4; transform-origin: center bottom; animation: cycle-route 7.4s cubic-bezier(.32,.06,.65,.96) both; filter: drop-shadow(0 7px 6px rgba(42,33,20,.32)); }
 .cyclist::after { content: ""; position: absolute; z-index: 0; left: -8%; bottom: 4%; width: 48%; height: 16%; border-radius: 50%; opacity: .45; background: radial-gradient(ellipse, rgba(210,151,77,.62), rgba(205,139,65,.22) 50%, transparent 72%); filter: blur(5px); animation: cyclist-dust 780ms ease-out infinite; }
 .cyclist__sprite { position: relative; z-index: 1; display: block; width: 100%; height: 100%; background-position: 0 0; background-repeat: no-repeat; background-size: 400% 100%; will-change: transform, background-position; animation: cyclist-frames 780ms steps(1, end) infinite; }
+.runner { position: absolute; z-index: 2; left: -6%; bottom: -23%; height: min(78svh, 338px); aspect-ratio: 3 / 4; transform-origin: center bottom; animation: run-route 6.8s cubic-bezier(.32,.08,.68,.94) both; filter: drop-shadow(0 8px 7px rgba(72,38,25,.32)); }
+.runner::after { content: ""; position: absolute; z-index: 0; left: -8%; bottom: 1%; width: 54%; height: 14%; border-radius: 50%; background: radial-gradient(ellipse, rgba(232,168,91,.62), rgba(194,113,55,.2) 52%, transparent 74%); filter: blur(5px); animation: runner-dust 620ms ease-out infinite; }
+.runner__sprite { position: relative; z-index: 1; display: block; width: 100%; height: 100%; background-position: 0 0; background-repeat: no-repeat; background-size: 400% 100%; will-change: transform, background-position; animation: runner-frames 620ms steps(1, end) infinite; }
 
 .letter { position: absolute; z-index: 3; inset: max(7vh, 36px) max(8vw, calc(30px + env(safe-area-inset-right))) max(5vh, 18px) max(8vw, calc(30px + env(safe-area-inset-left))); display: grid; grid-template-columns: 92px 1fr auto; gap: 18px; align-items: center; padding: 20px 22px; border: 1px solid var(--ink); border-radius: 26px; background: #fff6e5f4; color: var(--ink); box-shadow: inset 0 0 0 4px #f4b55f33, 0 24px 70px #06151999; animation: letter-in .75s var(--ease) both; }
 .letter__portrait { display: grid; place-items: center; width: 80px; height: 80px; border: 3px solid var(--gold); border-radius: 50%; background-color: var(--coral); background-position: 50% 36%; background-size: cover; box-shadow: 0 7px 0 #17383c22; }
@@ -198,6 +209,22 @@ button { color: inherit; }
   45% { opacity: .48; transform: translate3d(0, 0, 0) scale(.85); }
   100% { opacity: 0; transform: translate3d(-28%, -7px, 0) scale(1.3); }
 }
+@keyframes run-route {
+  0% { left: -6%; bottom: -23%; transform: scale(1.05) rotate(-2deg); }
+  48% { left: 35%; bottom: -2%; transform: scale(.66) rotate(-3deg); }
+  100% { left: 70%; bottom: 26%; transform: scale(.28) rotate(-2deg); }
+}
+@keyframes runner-frames {
+  0%, 100% { background-position: 0 0; transform: translateY(0); }
+  25% { background-position: 33.333% 0; transform: translateY(-2px); }
+  50% { background-position: 66.666% 0; transform: translateY(-5px); }
+  75% { background-position: 100% 0; transform: translateY(-1px); }
+}
+@keyframes runner-dust {
+  0% { opacity: 0; transform: translate3d(24%, 2px, 0) scale(.42); }
+  42% { opacity: .62; transform: translate3d(0, 0, 0) scale(.9); }
+  100% { opacity: 0; transform: translate3d(-32%, -8px, 0) scale(1.38); }
+}
 @keyframes wave-glint {
   0%, 100% { opacity: .55; transform: scale(.94); }
   50% { opacity: .95; transform: scale(1.08) rotate(5deg); }
@@ -205,6 +232,10 @@ button { color: inherit; }
 @keyframes mountain-dust {
   0%, 100% { opacity: .45; transform: translateY(1%); }
   50% { opacity: .8; transform: translateY(-1%); }
+}
+@keyframes lantern-glow {
+  0%, 100% { opacity: .52; transform: scale(.96); }
+  50% { opacity: .9; transform: scale(1.035); }
 }
 
 @media (max-height: 370px) {
@@ -240,4 +271,6 @@ button { color: inherit; }
   .swimmer__sprite { animation: none !important; background-position: 100% 0; }
   .cyclist { right: 72%; bottom: 42%; transform: scale(.94) scaleX(-1) rotate(-3deg); }
   .cyclist__sprite { animation: none !important; background-position: 100% 0; }
+  .runner { left: 70%; bottom: 26%; transform: scale(.28) rotate(-2deg); }
+  .runner__sprite { animation: none !important; background-position: 100% 0; }
 }
