@@ -69,7 +69,7 @@ export const scenes: Scene[] = [
     title: "По следу первого снега",
     body: "Лыжня ведёт через тихий лес к Соне и Альбусу.",
     action: "Догнать их",
-    art: "/art/sonya-winter-trail-v1.png",
+    art: "/art/sonya-winter-trail-v2.png",
     traveller: "skier",
     travellerLabel: "Папа едет на лыжах к Соне и Альбусу",
   },

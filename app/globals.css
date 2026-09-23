@@ -121,8 +121,7 @@ button { color: inherit; }
 @keyframes traveller-steps { to { transform: translateX(-100%); } }
 @keyframes ski-route {
   0% { left: 1%; bottom: -28%; transform: scale(.92) rotate(-1deg); }
-  58% { left: 28%; bottom: 3%; transform: scale(.52) rotate(-1deg); }
-  100% { left: 50%; bottom: 29%; transform: scale(.22) rotate(-2deg); }
+  100% { left: 43%; bottom: 33%; transform: scale(.2) rotate(-1deg); }
 }
 @keyframes skier-glide { from { transform: translateY(0) rotate(-.6deg); } to { transform: translateY(-3px) rotate(.6deg); } }
 
@@ -153,6 +152,6 @@ button { color: inherit; }
   .scene__art { transform: scale(1.035); }
   .traveller { left: 54%; bottom: 51.5%; transform: scale(.31); }
   .traveller__sprite { animation: none !important; transform: none; }
-  .skier { left: 50%; bottom: 29%; transform: scale(.22) rotate(-2deg); }
+  .skier { left: 43%; bottom: 33%; transform: scale(.2) rotate(-1deg); }
   .skier img { animation: none !important; }
 }
