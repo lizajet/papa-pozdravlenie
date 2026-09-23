@@ -80,7 +80,7 @@ export const scenes: Scene[] = [
     title: "Снег — это приглашение играть",
     body: "Особенно когда Альбус уже мчится навстречу, а серьёзный лыжный маршрут на минуту превращается в снежную возню.",
     action: "Запомнить этот смех",
-    art: "/art/sonya-snow-meeting-v1.png",
+    art: "/art/sonya-snow-meeting-v2.png",
   },
   {
     id: "sonya-message",
