@@ -79,8 +79,9 @@ button { color: inherit; }
 .traveller { position: absolute; z-index: 2; left: 8%; bottom: -3.5%; height: clamp(150px, 48svh, 220px); aspect-ratio: 1 / 2; overflow: hidden; transform-origin: bottom center; animation: travel 6.4s linear both; filter: drop-shadow(0 5px 5px #102c334d); }
 .traveller__sprite { display: block; width: 600%; height: 100%; background-position: 0 0; background-repeat: no-repeat; background-size: 100% 100%; animation: traveller-steps 720ms steps(6, end) infinite; }
 .skier { position: absolute; z-index: 2; left: 2%; bottom: -27%; height: min(76svh, 330px); aspect-ratio: 1105 / 1424; transform-origin: bottom center; animation: ski-route 7.2s cubic-bezier(.34,.04,.66,1) both; filter: drop-shadow(0 8px 7px rgba(16,44,51,.3)); }
-.skier::after { content: ""; position: absolute; left: -18%; right: 6%; bottom: 4%; height: 18%; opacity: .75; background: radial-gradient(ellipse at center, rgba(255,255,255,.88), rgba(222,240,248,.32) 46%, transparent 72%); filter: blur(4px); transform: rotate(-8deg); }
-.skier img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: contain; animation: skier-glide 840ms ease-in-out infinite alternate; }
+.skier::before { content: ""; position: absolute; z-index: 0; left: -15%; bottom: 3%; width: 48%; height: 16%; opacity: 0; pointer-events: none; background: radial-gradient(ellipse at 72% 58%, rgba(255,255,255,.9), rgba(222,240,248,.46) 42%, transparent 72%); filter: blur(3px); transform-origin: right center; animation: skier-spray 920ms ease-out infinite; }
+.skier::after { content: ""; position: absolute; left: -18%; right: 6%; bottom: 4%; height: 18%; opacity: .68; pointer-events: none; background: radial-gradient(ellipse at center, rgba(255,255,255,.88), rgba(222,240,248,.32) 46%, transparent 72%); filter: blur(4px); transform: rotate(-8deg); animation: skier-contact 920ms ease-in-out infinite; }
+.skier img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: contain; transform-origin: 50% 88%; will-change: transform; animation: skier-stride 920ms cubic-bezier(.45,.05,.55,.95) infinite; }
 
 .letter { position: absolute; z-index: 3; inset: max(7vh, 36px) max(8vw, calc(30px + env(safe-area-inset-right))) max(5vh, 18px) max(8vw, calc(30px + env(safe-area-inset-left))); display: grid; grid-template-columns: 92px 1fr auto; gap: 18px; align-items: center; padding: 20px 22px; border: 1px solid var(--ink); border-radius: 26px; background: #fff6e5f4; color: var(--ink); box-shadow: inset 0 0 0 4px #f4b55f33, 0 24px 70px #06151999; animation: letter-in .75s var(--ease) both; }
 .letter__portrait { display: grid; place-items: center; width: 80px; height: 80px; border: 3px solid var(--gold); border-radius: 50%; background-color: var(--coral); background-position: 50% 36%; background-size: cover; box-shadow: 0 7px 0 #17383c22; }
@@ -125,7 +126,21 @@ button { color: inherit; }
   52.01% { left: 20%; bottom: 18%; transform: translateX(-50%) scale(.5) scaleX(1) rotate(-1deg); }
   100% { left: 43%; bottom: 35%; transform: translateX(-50%) scale(.2) scaleX(1) rotate(-1deg); }
 }
-@keyframes skier-glide { from { transform: translateY(0) rotate(-.6deg); } to { transform: translateY(-3px) rotate(.6deg); } }
+@keyframes skier-stride {
+  0%, 100% { transform: translate3d(-1.5%, 1px, 0) rotate(-1.2deg) skewX(-.6deg); }
+  25% { transform: translate3d(1%, -4px, 0) rotate(.8deg) skewX(.8deg); }
+  50% { transform: translate3d(1.8%, 0, 0) rotate(1.1deg) skewX(.4deg); }
+  75% { transform: translate3d(-.6%, -3px, 0) rotate(-.5deg) skewX(-.7deg); }
+}
+@keyframes skier-spray {
+  0%, 48%, 100% { opacity: 0; transform: translate3d(14%, 1px, 0) scale(.45) rotate(-8deg); }
+  62% { opacity: .82; transform: translate3d(-3%, -2px, 0) scale(1) rotate(-8deg); }
+  86% { opacity: 0; transform: translate3d(-22%, -6px, 0) scale(1.35) rotate(-8deg); }
+}
+@keyframes skier-contact {
+  0%, 100% { opacity: .55; transform: translateY(1px) scaleX(.92) rotate(-8deg); }
+  50% { opacity: .78; transform: translateY(-1px) scaleX(1.06) rotate(-8deg); }
+}
 
 @media (max-height: 370px) {
   .scene-copy { bottom: 18px; }
