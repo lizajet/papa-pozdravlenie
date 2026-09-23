@@ -6,6 +6,7 @@ const basePath = isGitHubPages ? `/${repositoryName}` : "";
 
 const nextConfig: NextConfig = {
   agentRules: false,
+  allowedDevOrigins: ["127.0.0.1"],
   output: "export",
   basePath,
   assetPrefix: basePath || undefined,
