@@ -6,8 +6,12 @@ import { ContinueButton } from "@/components/ContinueButton";
 import { OrientationGate } from "@/components/OrientationGate";
 import { initialState, reducer, sceneOrder } from "./reducer";
 
-const storageKey = "papa-pozdravlenie:first-meeting";
+const storageKey = "papa-pozdravlenie:story-progress-v2";
 const assetBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+function assetUrl(path: string) {
+  return `${assetBasePath}${path}`;
+}
 
 function playChime() {
   const AudioContextClass = window.AudioContext ??
@@ -43,7 +47,7 @@ export function Experience() {
   }, [scene.id, state.started]);
 
   const continueStory = useCallback(() => {
-    if (scene.id === "farewell") {
+    if (scene.id === "sonya-farewell") {
       window.localStorage.removeItem(storageKey);
       dispatch({ type: "RESTART" });
       return;
@@ -55,14 +59,18 @@ export function Experience() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && state.selectedAchievementId) {
         dispatch({ type: "CLOSE_ACHIEVEMENT" });
-      } else if (event.key === "Enter" && state.started && !state.selectedAchievementId) {
+      } else if (event.key === "Enter" && state.started && !state.selectedAchievementId && scene.kind !== "travel") {
         continueStory();
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [continueStory, state.selectedAchievementId, state.started]);
+  }, [continueStory, scene.kind, state.selectedAchievementId, state.started]);
 
+  const sceneAchievements = useMemo(
+    () => achievements.filter((achievement) => scene.achievementIds?.includes(achievement.id)),
+    [scene.achievementIds],
+  );
   const selectedAchievement = useMemo(
     () => achievements.find((achievement) => achievement.id === state.selectedAchievementId),
     [state.selectedAchievementId],
@@ -112,47 +120,58 @@ export function Experience() {
   }
 
   return (
-    <main className={`experience scene scene--${scene.id}`}>
+    <main className={`experience scene scene--${scene.id} scene-kind--${scene.kind}`}>
       <div
-        className={`scene__art scene__art--${scene.background}`}
-        style={{
-          backgroundImage: `url(${assetBasePath}/art/${
-            scene.background === "trail" ? "ural-dawn-trail-v2.png" : "liza-sunrise-meeting-v5.jpg"
-          })`,
-        }}
+        className="scene__art"
+        style={{ backgroundImage: `url(${assetUrl(scene.art)})` }}
         aria-hidden="true"
       />
       <div className="scene__vignette" aria-hidden="true" />
       <div className="scene__grain" aria-hidden="true" />
-      {scene.id !== "trail" && (
+      {scene.kind !== "travel" && (
         <header className="scene__header">
           <span>Андрей · один большой день</span>
           <span>{String(state.sceneIndex + 1).padStart(2, "0")} / {String(scenes.length).padStart(2, "0")}</span>
         </header>
       )}
 
-      {scene.id === "trail" && (
+      {scene.kind === "travel" && scene.traveller === "walker" && (
         <div
           className="traveller"
           role="img"
-          aria-label="Папа идёт по тропе к Лизе"
-          onAnimationEnd={() => dispatch({ type: "CONTINUE" })}
+          aria-label={scene.travellerLabel}
+          onAnimationEnd={(event) => {
+            if (event.target === event.currentTarget) dispatch({ type: "CONTINUE" });
+          }}
         >
           <span
             className="traveller__sprite"
-            style={{ backgroundImage: `url(${assetBasePath}/characters/hero-walk-v1.png)` }}
+            style={{ backgroundImage: `url(${assetUrl("/characters/hero-walk-v1.png")})` }}
             aria-hidden="true"
           />
         </div>
       )}
 
-      {scene.id === "trail" ? null : scene.id === "message" ? (
+      {scene.kind === "travel" && scene.traveller === "skier" && (
+        <div
+          className="skier"
+          role="img"
+          aria-label={scene.travellerLabel}
+          onAnimationEnd={(event) => {
+            if (event.target === event.currentTarget) dispatch({ type: "CONTINUE" });
+          }}
+        >
+          <img src={assetUrl("/characters/papa-skier-v1.png")} alt="" />
+        </div>
+      )}
+
+      {scene.kind === "travel" ? null : scene.kind === "message" ? (
         <section className="letter" aria-labelledby="letter-title">
           <div
             className="letter__portrait"
-            style={{ backgroundImage: `url(${assetBasePath}/people/liza-portrait-v1.jpg)` }}
+            style={{ backgroundImage: `url(${assetUrl(scene.portrait ?? "")})` }}
             role="img"
-            aria-label="Портрет Лизы"
+            aria-label={`Портрет ${scene.author}`}
           />
           <div className="letter__content">
             <p className="eyebrow">{scene.eyebrow}</p>
@@ -160,11 +179,11 @@ export function Experience() {
             <div className="letter__text">
               {scene.body?.split("\n\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
-            <p className="letter__sign">Люблю, Лиза</p>
+            <p className="letter__sign">{scene.sign}</p>
           </div>
           <ContinueButton onClick={continueStory}>{scene.action}</ContinueButton>
         </section>
-      ) : scene.id === "achievements" ? (
+      ) : scene.kind === "achievements" ? (
         <section className="achievement-scene">
           <div className="achievement-scene__intro">
             <p className="eyebrow">{scene.eyebrow}</p>
@@ -172,7 +191,7 @@ export function Experience() {
             <p>{scene.body}</p>
           </div>
           <div className="achievement-list">
-            {achievements.map((achievement, index) => (
+            {sceneAchievements.map((achievement, index) => (
               <button
                 className="achievement"
                 key={achievement.id}
@@ -187,14 +206,14 @@ export function Experience() {
           <ContinueButton onClick={continueStory} light>{scene.action}</ContinueButton>
         </section>
       ) : (
-        <section className={`scene-copy scene-copy--${scene.id}`}>
+        <section className={`scene-copy scene-copy--${scene.kind}`}>
           <p className="eyebrow">{scene.eyebrow}</p>
           <h1>{scene.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h1>
           {scene.body && <p className="scene-copy__body">{scene.body}</p>}
-          <ContinueButton onClick={continueStory} light={scene.id !== "opening"}>
+          <ContinueButton onClick={continueStory} light={scene.kind !== "opening"}>
             {scene.action}
           </ContinueButton>
-          {scene.id === "farewell" && <small className="prototype-note">Продолжение пути появится в следующей главе</small>}
+          {scene.id === "sonya-farewell" && <small className="prototype-note">Продолжение пути появится в следующей главе</small>}
         </section>
       )}
 
@@ -202,7 +221,7 @@ export function Experience() {
         <div className="achievement-modal" role="dialog" aria-modal="true" aria-labelledby="achievement-title">
           <button className="achievement-modal__close" onClick={() => dispatch({ type: "CLOSE_ACHIEVEMENT" })} aria-label="Закрыть">×</button>
           <span className="achievement-modal__medal" aria-hidden="true">{selectedAchievement.symbol}</span>
-          <p className="eyebrow">Ачивка от Лизы</p>
+          <p className="eyebrow">Ачивка от {selectedAchievement.author}</p>
           <h2 id="achievement-title">{selectedAchievement.title}</h2>
           <p>{selectedAchievement.description}</p>
         </div>

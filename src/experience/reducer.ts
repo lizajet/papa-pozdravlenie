@@ -15,7 +15,21 @@ export type ExperienceEvent =
   | { type: "RESTART" }
   | { type: "RESTORE"; sceneId: SceneId };
 
-const lastSceneIndex = 5;
+export const sceneOrder: SceneId[] = [
+  "opening",
+  "liza-trail",
+  "liza-meeting",
+  "liza-message",
+  "liza-achievements",
+  "liza-farewell",
+  "sonya-trail",
+  "sonya-meeting",
+  "sonya-message",
+  "sonya-achievements",
+  "sonya-farewell",
+];
+
+const lastSceneIndex = sceneOrder.length - 1;
 
 export const initialState: ExperienceState = {
   started: false,
@@ -36,16 +50,9 @@ export function reducer(state: ExperienceState, event: ExperienceEvent): Experie
       return { ...state, selectedAchievementId: null };
     case "RESTART":
       return { ...initialState, started: true, audioEnabled: state.audioEnabled };
-    case "RESTORE":
-      return { ...state, started: true, sceneIndex: sceneOrder.indexOf(event.sceneId) };
+    case "RESTORE": {
+      const sceneIndex = sceneOrder.indexOf(event.sceneId);
+      return { ...state, started: true, sceneIndex: sceneIndex >= 0 ? sceneIndex : 0 };
+    }
   }
 }
-
-export const sceneOrder: SceneId[] = [
-  "opening",
-  "trail",
-  "meeting",
-  "message",
-  "achievements",
-  "farewell",
-];
