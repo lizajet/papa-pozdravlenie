@@ -9,7 +9,12 @@ export type SceneId =
   | "sonya-meeting"
   | "sonya-message"
   | "sonya-achievements"
-  | "sonya-farewell";
+  | "sonya-farewell"
+  | "taya-trail"
+  | "taya-meeting"
+  | "taya-message"
+  | "taya-achievements"
+  | "taya-farewell";
 
 export type SceneKind =
   | "opening"
@@ -27,17 +32,17 @@ export type Scene = {
   body?: string;
   action: string;
   art: string;
-  author?: "Лиза" | "Соня";
+  author?: "Лиза" | "Соня" | "Тая";
   portrait?: string;
   sign?: string;
   achievementIds?: string[];
-  traveller?: "walker" | "skier";
+  traveller?: "walker" | "skier" | "swimmer";
   travellerLabel?: string;
 };
 
 export type Achievement = {
   id: string;
-  author: "Лиза" | "Соня";
+  author: "Лиза" | "Соня" | "Тая";
   title: string;
   description: string;
   symbol: string;

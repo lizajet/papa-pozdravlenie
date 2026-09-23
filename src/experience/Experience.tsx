@@ -47,7 +47,7 @@ export function Experience() {
   }, [scene.id, state.started]);
 
   const continueStory = useCallback(() => {
-    if (scene.id === "sonya-farewell") {
+    if (scene.id === "taya-farewell") {
       window.localStorage.removeItem(storageKey);
       dispatch({ type: "RESTART" });
       return;
@@ -169,6 +169,23 @@ export function Experience() {
         </div>
       )}
 
+      {scene.kind === "travel" && scene.traveller === "swimmer" && (
+        <div
+          className="swimmer"
+          role="img"
+          aria-label={scene.travellerLabel}
+          onAnimationEnd={(event) => {
+            if (event.target === event.currentTarget) dispatch({ type: "CONTINUE" });
+          }}
+        >
+          <span
+            className="swimmer__sprite"
+            style={{ backgroundImage: `url(${assetUrl("/characters/papa-swimmer-cycle-v1.png")})` }}
+            aria-hidden="true"
+          />
+        </div>
+      )}
+
       {scene.kind === "travel" ? null : scene.kind === "message" ? (
         <section className="letter" aria-labelledby="letter-title">
           <div
@@ -217,7 +234,7 @@ export function Experience() {
           <ContinueButton onClick={continueStory} light={scene.kind !== "opening"}>
             {scene.action}
           </ContinueButton>
-          {scene.id === "sonya-farewell" && <small className="prototype-note">Продолжение пути появится в следующей главе</small>}
+          {scene.id === "taya-farewell" && <small className="prototype-note">Продолжение пути появится в следующей главе</small>}
         </section>
       )}
 
