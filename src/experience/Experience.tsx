@@ -161,7 +161,11 @@ export function Experience() {
             if (event.target === event.currentTarget) dispatch({ type: "CONTINUE" });
           }}
         >
-          <img src={assetUrl("/characters/papa-skier-v1.png")} alt="" />
+          <span
+            className="skier__sprite"
+            style={{ backgroundImage: `url(${assetUrl("/characters/papa-skier-cycle-v1.png")})` }}
+            aria-hidden="true"
+          />
         </div>
       )}
 
