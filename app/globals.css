@@ -74,6 +74,8 @@ button { color: inherit; }
     linear-gradient(0deg, rgba(45,35,20,.35), transparent 58%);
 }
 .scene--fadey-meeting .scene__art { background-position: 55% 50%; }
+.scene--fadey-farewell .scene__vignette { background: linear-gradient(270deg, rgba(13,31,30,.62), transparent 52%), linear-gradient(0deg, rgba(45,35,20,.38), transparent 58%); }
+.scene--fadey-farewell .scene-copy { left: auto; right: max(6vw, calc(24px + env(safe-area-inset-right))); }
 .scene--fadey-farewell::after { content: ""; position: absolute; z-index: 1; inset: 0; pointer-events: none; background: linear-gradient(12deg, rgba(202,139,68,.32), transparent 46%), radial-gradient(ellipse at 72% 84%, rgba(240,188,107,.34), transparent 27%); animation: mountain-dust 3.5s ease-in-out infinite; }
 .scene__grain { pointer-events: none; opacity: .1; mix-blend-mode: soft-light; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); }
 .scene__header { position: absolute; z-index: 3; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: calc(14px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) 0 calc(22px + env(safe-area-inset-left)); color: #fff6e5cc; font-size: clamp(8px, 1.15vw, 11px); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
@@ -104,7 +106,7 @@ button { color: inherit; }
 .swimmer { position: absolute; z-index: 2; left: -7%; bottom: 2%; height: min(72svh, 310px); aspect-ratio: 3 / 4; transform-origin: center; animation: swim-route 7.4s cubic-bezier(.28,.08,.68,.94) both; filter: drop-shadow(0 7px 7px rgba(7,55,65,.28)); }
 .swimmer::after { content: ""; position: absolute; z-index: 0; left: 7%; right: 1%; bottom: 34%; height: 12%; border-radius: 50%; opacity: .65; background: radial-gradient(ellipse, rgba(239,253,252,.82), rgba(133,222,226,.2) 56%, transparent 72%); filter: blur(4px); animation: swimmer-wake 880ms ease-in-out infinite; }
 .swimmer__sprite { position: relative; z-index: 1; display: block; width: 100%; height: 100%; background-position: 0 0; background-repeat: no-repeat; background-size: 400% 100%; will-change: transform, background-position; animation: swimmer-frames 880ms steps(1, end) infinite; }
-.cyclist { position: absolute; z-index: 2; left: 0; bottom: -20%; height: min(68svh, 294px); aspect-ratio: 3 / 4; transform-origin: center bottom; animation: cycle-route 7.4s cubic-bezier(.32,.06,.65,.96) both; filter: drop-shadow(0 7px 6px rgba(42,33,20,.32)); }
+.cyclist { position: absolute; z-index: 2; right: 0; bottom: -20%; height: min(68svh, 294px); aspect-ratio: 3 / 4; transform-origin: center bottom; animation: cycle-route 7.4s cubic-bezier(.32,.06,.65,.96) both; filter: drop-shadow(0 7px 6px rgba(42,33,20,.32)); }
 .cyclist::after { content: ""; position: absolute; z-index: 0; left: -8%; bottom: 4%; width: 48%; height: 16%; border-radius: 50%; opacity: .45; background: radial-gradient(ellipse, rgba(210,151,77,.62), rgba(205,139,65,.22) 50%, transparent 72%); filter: blur(5px); animation: cyclist-dust 780ms ease-out infinite; }
 .cyclist__sprite { position: relative; z-index: 1; display: block; width: 100%; height: 100%; background-position: 0 0; background-repeat: no-repeat; background-size: 400% 100%; will-change: transform, background-position; animation: cyclist-frames 780ms steps(1, end) infinite; }
 
@@ -181,9 +183,9 @@ button { color: inherit; }
   50% { opacity: .72; transform: scaleX(1.08) translateX(-7%); }
 }
 @keyframes cycle-route {
-  0% { left: -2%; bottom: -20%; transform: scale(.9) rotate(-4deg); }
-  48% { left: 40%; bottom: 7%; transform: scale(.52) rotate(-5deg); }
-  100% { left: 72%; bottom: 42%; transform: scale(.22) rotate(-3deg); }
+  0% { right: -2%; bottom: -20%; transform: scale(.9) scaleX(-1) rotate(-4deg); }
+  48% { right: 40%; bottom: 7%; transform: scale(.52) scaleX(-1) rotate(-5deg); }
+  100% { right: 72%; bottom: 42%; transform: scale(.22) scaleX(-1) rotate(-3deg); }
 }
 @keyframes cyclist-frames {
   0%, 100% { background-position: 0 0; transform: translateY(0); }
@@ -236,6 +238,6 @@ button { color: inherit; }
   .skier__sprite { animation: none !important; background-position: 66.666% 0; }
   .swimmer { left: 67%; bottom: 2%; transform: scale(.72) rotate(-2deg); }
   .swimmer__sprite { animation: none !important; background-position: 100% 0; }
-  .cyclist { left: 72%; bottom: 42%; transform: scale(.22) rotate(-3deg); }
+  .cyclist { right: 72%; bottom: 42%; transform: scale(.22) scaleX(-1) rotate(-3deg); }
   .cyclist__sprite { animation: none !important; background-position: 100% 0; }
 }
