@@ -225,7 +225,7 @@ export const scenes: Scene[] = [
     title: "Последний рывок к закату",
     body: "Следы на песке ведут к финишу, где Ярик уже машет папе рукой.",
     action: "Добежать до Ярика",
-    art: "/art/yarik-dubai-trail-v1.png",
+    art: "/art/yarik-dubai-trail-v2.png",
     traveller: "runner",
     travellerLabel: "Папа бежит по дюнам к восьмилетнему Ярику",
   },
