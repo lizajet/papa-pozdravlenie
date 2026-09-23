@@ -183,9 +183,9 @@ button { color: inherit; }
   50% { opacity: .72; transform: scaleX(1.08) translateX(-7%); }
 }
 @keyframes cycle-route {
-  0% { right: -2%; bottom: -20%; transform: scale(.9) scaleX(-1) rotate(-4deg); }
-  48% { right: 40%; bottom: 7%; transform: scale(.52) scaleX(-1) rotate(-5deg); }
-  100% { right: 72%; bottom: 42%; transform: scale(.22) scaleX(-1) rotate(-3deg); }
+  0% { right: -2%; bottom: -20%; transform: scale(1.17) scaleX(-1) rotate(-4deg); }
+  48% { right: 40%; bottom: 7%; transform: scale(1.05) scaleX(-1) rotate(-5deg); }
+  100% { right: 72%; bottom: 42%; transform: scale(.94) scaleX(-1) rotate(-3deg); }
 }
 @keyframes cyclist-frames {
   0%, 100% { background-position: 0 0; transform: translateY(0); }
@@ -238,6 +238,6 @@ button { color: inherit; }
   .skier__sprite { animation: none !important; background-position: 66.666% 0; }
   .swimmer { left: 67%; bottom: 2%; transform: scale(.72) rotate(-2deg); }
   .swimmer__sprite { animation: none !important; background-position: 100% 0; }
-  .cyclist { right: 72%; bottom: 42%; transform: scale(.22) scaleX(-1) rotate(-3deg); }
+  .cyclist { right: 72%; bottom: 42%; transform: scale(.94) scaleX(-1) rotate(-3deg); }
   .cyclist__sprite { animation: none !important; background-position: 100% 0; }
 }
