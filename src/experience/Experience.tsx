@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { achievements, scenes } from "@/content/story";
 import { ContinueButton } from "@/components/ContinueButton";
 import { OrientationGate } from "@/components/OrientationGate";
@@ -13,29 +13,28 @@ function assetUrl(path: string) {
   return `${assetBasePath}${path}`;
 }
 
-function playChime() {
-  const AudioContextClass = window.AudioContext ??
-    (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-  if (!AudioContextClass) return;
-  const context = new AudioContextClass();
-  const oscillator = context.createOscillator();
-  const gain = context.createGain();
-  oscillator.type = "sine";
-  oscillator.frequency.setValueAtTime(523.25, context.currentTime);
-  oscillator.frequency.exponentialRampToValueAtTime(783.99, context.currentTime + 0.7);
-  gain.gain.setValueAtTime(0.0001, context.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.12, context.currentTime + 0.04);
-  gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.85);
-  oscillator.connect(gain).connect(context.destination);
-  oscillator.start();
-  oscillator.stop(context.currentTime + 0.9);
-}
-
 export function Experience() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [restorableScene, setRestorableScene] = useState<(typeof sceneOrder)[number] | null>(null);
+  const musicRef = useRef<HTMLAudioElement>(null);
   const scene = scenes[state.sceneIndex];
+
+  const startMusic = useCallback(() => {
+    const music = musicRef.current;
+    if (!music) return;
+    music.volume = 0.4;
+    void music.play().catch(() => setAudioEnabled(false));
+  }, []);
+
+  const setMusicEnabled = useCallback((enabled: boolean) => {
+    setAudioEnabled(enabled);
+    if (!enabled) {
+      musicRef.current?.pause();
+      return;
+    }
+    startMusic();
+  }, [startMusic]);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(storageKey) as (typeof sceneOrder)[number] | null;
@@ -78,49 +77,57 @@ export function Experience() {
 
   if (!state.started) {
     return (
-      <main className="preflight">
-        <div className="preflight__glow" />
-        <div className="preflight__content">
-          <span className="preflight__mark">✦</span>
-          <p className="eyebrow">Интерактивная история</p>
-          <h1>Для папы.<br />Про один большой день.</h1>
-          <p className="preflight__hint">Лучше смотреть со звуком и в горизонтальном положении.</p>
-          <button className="sound-toggle" onClick={() => { playChime(); setAudioEnabled(true); }}>
-            <span aria-hidden="true">♪</span> Проверить звук
-          </button>
-          <button
-            className="start-button"
-            onClick={() => {
-              if (audioEnabled) playChime();
-              dispatch({ type: "START", audioEnabled });
-            }}
-          >
-            Начать историю <span aria-hidden="true">→</span>
-          </button>
-          <label className="audio-choice">
-            <input
-              type="checkbox"
-              checked={audioEnabled}
-              onChange={(event) => setAudioEnabled(event.target.checked)}
-            />
-            <span>звук включён</span>
-          </label>
-          {restorableScene && (
-            <button
-              className="restore-button"
-              onClick={() => dispatch({ type: "RESTORE", sceneId: restorableScene })}
-            >
-              Продолжить с сохранённого места
+      <>
+        <audio ref={musicRef} src={assetUrl("/audio/ya-budu-tam.mp3")} loop preload="auto" />
+        <main className="preflight">
+          <div className="preflight__glow" />
+          <div className="preflight__content">
+            <span className="preflight__mark">✦</span>
+            <p className="eyebrow">Интерактивная история</p>
+            <h1>Для папы.<br />Про один большой день.</h1>
+            <p className="preflight__hint">Лучше смотреть со звуком и в горизонтальном положении.</p>
+            <button className="sound-toggle" onClick={() => { setAudioEnabled(true); startMusic(); }}>
+              <span aria-hidden="true">♪</span> Проверить звук
             </button>
-          )}
-        </div>
-        <OrientationGate />
-      </main>
+            <button
+              className="start-button"
+              onClick={() => {
+                if (audioEnabled) startMusic();
+                dispatch({ type: "START", audioEnabled });
+              }}
+            >
+              Начать историю <span aria-hidden="true">→</span>
+            </button>
+            <label className="audio-choice">
+              <input
+                type="checkbox"
+                checked={audioEnabled}
+                onChange={(event) => setMusicEnabled(event.target.checked)}
+              />
+              <span>звук включён</span>
+            </label>
+            {restorableScene && (
+              <button
+                className="restore-button"
+                onClick={() => {
+                  if (audioEnabled) startMusic();
+                  dispatch({ type: "RESTORE", sceneId: restorableScene });
+                }}
+              >
+                Продолжить с сохранённого места
+              </button>
+            )}
+          </div>
+          <OrientationGate />
+        </main>
+      </>
     );
   }
 
   return (
-    <main className={`experience scene scene--${scene.id} scene-kind--${scene.kind}`}>
+    <>
+      <audio ref={musicRef} src={assetUrl("/audio/ya-budu-tam.mp3")} loop preload="auto" />
+      <main className={`experience scene scene--${scene.id} scene-kind--${scene.kind}`}>
       <div
         className="scene__art"
         style={{ backgroundImage: `url(${assetUrl(scene.art)})` }}
@@ -282,7 +289,8 @@ export function Experience() {
         </div>
       )}
 
-      <OrientationGate />
-    </main>
+        <OrientationGate />
+      </main>
+    </>
   );
 }
