@@ -3,17 +3,15 @@ import type { SceneId } from "@/types/story";
 export type ExperienceState = {
   started: boolean;
   sceneIndex: number;
-  audioEnabled: boolean;
   selectedAchievementId: string | null;
 };
 
 export type ExperienceEvent =
-  | { type: "START"; audioEnabled: boolean }
+  | { type: "START" }
   | { type: "CONTINUE" }
   | { type: "OPEN_ACHIEVEMENT"; id: string }
   | { type: "CLOSE_ACHIEVEMENT" }
-  | { type: "RESTART" }
-  | { type: "RESTORE"; sceneId: SceneId };
+  | { type: "RESTART" };
 
 export const sceneOrder: SceneId[] = [
   "opening",
@@ -48,14 +46,13 @@ const lastSceneIndex = sceneOrder.length - 1;
 export const initialState: ExperienceState = {
   started: false,
   sceneIndex: 0,
-  audioEnabled: true,
   selectedAchievementId: null,
 };
 
 export function reducer(state: ExperienceState, event: ExperienceEvent): ExperienceState {
   switch (event.type) {
     case "START":
-      return { ...state, started: true, audioEnabled: event.audioEnabled };
+      return { ...state, started: true };
     case "CONTINUE":
       return { ...state, sceneIndex: Math.min(state.sceneIndex + 1, lastSceneIndex) };
     case "OPEN_ACHIEVEMENT":
@@ -63,10 +60,6 @@ export function reducer(state: ExperienceState, event: ExperienceEvent): Experie
     case "CLOSE_ACHIEVEMENT":
       return { ...state, selectedAchievementId: null };
     case "RESTART":
-      return { ...initialState, started: true, audioEnabled: state.audioEnabled };
-    case "RESTORE": {
-      const sceneIndex = sceneOrder.indexOf(event.sceneId);
-      return { ...state, started: true, sceneIndex: sceneIndex >= 0 ? sceneIndex : 0 };
-    }
+      return { ...initialState, started: true };
   }
 }

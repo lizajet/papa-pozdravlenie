@@ -1,13 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { achievements, scenes } from "@/content/story";
 import { ContinueButton } from "@/components/ContinueButton";
 import { OrientationGate } from "@/components/OrientationGate";
 import type { Achievement } from "@/types/story";
-import { initialState, reducer, sceneOrder } from "./reducer";
+import { initialState, reducer } from "./reducer";
 
-const storageKey = "papa-pozdravlenie:story-progress-v2";
 const assetBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const authorGenitive: Record<Achievement["author"], string> = {
   Лиза: "Лизы",
@@ -23,8 +22,6 @@ function assetUrl(path: string) {
 
 export function Experience() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [audioEnabled, setAudioEnabled] = useState(true);
-  const [restorableScene, setRestorableScene] = useState<(typeof sceneOrder)[number] | null>(null);
   const musicRef = useRef<HTMLAudioElement>(null);
   const scene = scenes[state.sceneIndex];
 
@@ -32,30 +29,11 @@ export function Experience() {
     const music = musicRef.current;
     if (!music) return;
     music.volume = 0.4;
-    void music.play().catch(() => setAudioEnabled(false));
+    void music.play().catch(() => undefined);
   }, []);
-
-  const setMusicEnabled = useCallback((enabled: boolean) => {
-    setAudioEnabled(enabled);
-    if (!enabled) {
-      musicRef.current?.pause();
-      return;
-    }
-    startMusic();
-  }, [startMusic]);
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem(storageKey) as (typeof sceneOrder)[number] | null;
-    if (saved && sceneOrder.includes(saved) && saved !== "opening") setRestorableScene(saved);
-  }, []);
-
-  useEffect(() => {
-    if (state.started) window.localStorage.setItem(storageKey, scene.id);
-  }, [scene.id, state.started]);
 
   const continueStory = useCallback(() => {
     if (scene.id === "hall-of-fame") {
-      window.localStorage.removeItem(storageKey);
       dispatch({ type: "RESTART" });
       return;
     }
@@ -96,37 +74,15 @@ export function Experience() {
             <p className="eyebrow">Интерактивная история</p>
             <h1>Для папы.<br />Про один большой день.</h1>
             <p className="preflight__hint">Лучше смотреть со звуком и в горизонтальном положении.</p>
-            <button className="sound-toggle" onClick={() => { setAudioEnabled(true); startMusic(); }}>
-              <span aria-hidden="true">♪</span> Проверить звук
-            </button>
             <button
               className="start-button"
               onClick={() => {
-                if (audioEnabled) startMusic();
-                dispatch({ type: "START", audioEnabled });
+                startMusic();
+                dispatch({ type: "START" });
               }}
             >
               Начать историю <span aria-hidden="true">→</span>
             </button>
-            <label className="audio-choice">
-              <input
-                type="checkbox"
-                checked={audioEnabled}
-                onChange={(event) => setMusicEnabled(event.target.checked)}
-              />
-              <span>звук включён</span>
-            </label>
-            {restorableScene && (
-              <button
-                className="restore-button"
-                onClick={() => {
-                  if (audioEnabled) startMusic();
-                  dispatch({ type: "RESTORE", sceneId: restorableScene });
-                }}
-              >
-                Продолжить с сохранённого места
-              </button>
-            )}
           </div>
           <OrientationGate />
         </main>

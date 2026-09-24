@@ -38,15 +38,10 @@ button { color: inherit; }
 .eyebrow { margin: 0 0 8px; color: var(--gold); font: 700 clamp(9px, 1.25vw, 12px)/1.2 var(--interface); letter-spacing: .18em; text-transform: uppercase; }
 .preflight h1 { margin: 0; font: italic 500 clamp(28px, 5.5vw, 58px)/.96 var(--story); letter-spacing: -.04em; }
 .preflight__hint { margin: 12px 0 16px; color: #fff6e5b8; font: 400 clamp(11px, 1.5vw, 14px)/1.4 var(--story); }
-.sound-toggle, .start-button, .restore-button { border: 0; cursor: pointer; transition: transform .2s ease, background .2s ease; }
-.sound-toggle { min-width: 220px; height: 42px; margin-bottom: 8px; border: 1px solid #fff6e566; border-radius: 24px; background: transparent; }
-.sound-toggle span { color: var(--gold); margin-right: 8px; }
+.start-button { border: 0; cursor: pointer; transition: transform .2s ease, background .2s ease; }
 .start-button { min-width: 220px; height: 50px; padding: 0 10px 0 22px; border-radius: 27px; background: var(--cream); color: var(--ink); font-weight: 700; }
 .start-button span { display: inline-grid; place-items: center; width: 34px; height: 34px; margin-left: 12px; border-radius: 50%; background: var(--gold); }
-.sound-toggle:active, .start-button:active, .restore-button:active { transform: scale(.97); }
-.audio-choice { display: flex; align-items: center; gap: 6px; margin-top: 9px; color: #fff6e599; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
-.audio-choice input { accent-color: var(--gold); }
-.restore-button { margin-top: 8px; padding: 4px; color: #fff6e5aa; background: transparent; font-size: 11px; text-decoration: underline; text-underline-offset: 4px; }
+.start-button:active { transform: scale(.97); }
 
 .scene__art, .scene__vignette, .scene__grain { position: absolute; inset: 0; }
 .scene__art { background-position: center; background-size: cover; animation: camera-drift 16s ease-in-out both; transform: scale(1.035); }
