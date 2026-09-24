@@ -231,7 +231,7 @@ export function Experience() {
         >
           <span
             className="runner__sprite"
-            style={{ backgroundImage: `url(${assetUrl("/characters/papa-runner-cycle-v1.png")})` }}
+            style={{ backgroundImage: `url(${assetUrl("/characters/papa-runner-cycle-v2.png")})` }}
             aria-hidden="true"
           />
         </div>
