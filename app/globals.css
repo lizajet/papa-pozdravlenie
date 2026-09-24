@@ -103,10 +103,6 @@ button { color: inherit; }
 .traveller__sprite-window { position: absolute; inset: 0; overflow: hidden; }
 .traveller__sprite { display: block; width: 600%; height: 100%; background-position: 0 0; background-repeat: no-repeat; background-size: 100% 100%; animation: traveller-steps 720ms steps(6, end) infinite; }
 .traveller--family { left: 52%; bottom: -7%; animation: family-travel 9s linear both; }
-.traveller__lantern { position: absolute; z-index: 2; top: 46%; right: -13%; width: 29%; aspect-ratio: .7; border: max(1px, .018em) solid #372716; border-radius: 12% 12% 20% 20%; background: linear-gradient(90deg, #4a321c 0 14%, #ffd77a 16% 84%, #4a321c 86% 100%); box-shadow: inset 0 0 .12em #fff4b8, 0 0 .2em #ffc658; transform-origin: 50% -12%; animation: lantern-sway 720ms ease-in-out infinite; }
-.traveller__lantern::before { content: ""; position: absolute; left: 13%; right: 13%; top: -39%; height: 54%; border: max(1px, .018em) solid #372716; border-bottom: 0; border-radius: 50% 50% 0 0; }
-.traveller__lantern::after { content: ""; position: absolute; left: 18%; right: 18%; bottom: -13%; height: 14%; border-radius: 0 0 45% 45%; background: #372716; }
-.traveller__lantern-light { position: absolute; z-index: -1; left: 50%; top: 56%; width: 430%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 215, 116, .76) 0 7%, rgba(255, 190, 76, .34) 24%, rgba(255, 173, 50, .12) 46%, transparent 70%); filter: blur(2px); transform: translate(-50%, -50%); animation: lantern-glow 1.4s ease-in-out infinite alternate; }
 .skier { position: absolute; z-index: 2; left: 2%; bottom: -27%; height: min(76svh, 330px); aspect-ratio: 1105 / 1424; transform-origin: bottom center; animation: ski-route 7.2s cubic-bezier(.34,.04,.66,1) both; filter: drop-shadow(0 8px 7px rgba(16,44,51,.3)); }
 .skier::before { content: ""; position: absolute; z-index: 0; left: -15%; bottom: 3%; width: 48%; height: 16%; opacity: 0; pointer-events: none; background: radial-gradient(ellipse at 72% 58%, rgba(255,255,255,.9), rgba(222,240,248,.46) 42%, transparent 72%); filter: blur(3px); transform-origin: right center; animation: skier-spray 920ms ease-out infinite; }
 .skier::after { content: ""; position: absolute; left: -18%; right: 6%; bottom: 4%; height: 18%; opacity: .68; pointer-events: none; background: radial-gradient(ellipse at center, rgba(255,255,255,.88), rgba(222,240,248,.32) 46%, transparent 72%); filter: blur(4px); transform: rotate(-8deg); animation: skier-contact 920ms ease-in-out infinite; }
@@ -248,11 +244,6 @@ button { color: inherit; }
   100% { left: 66%; bottom: 51%; transform: translateX(-50%) scale(.2) scaleX(1); }
 }
 @keyframes traveller-steps { to { transform: translateX(-100%); } }
-@keyframes lantern-sway {
-  0%, 100% { transform: rotate(5deg) translateY(0); }
-  50% { transform: rotate(-6deg) translateY(5%); }
-}
-@keyframes lantern-glow { to { opacity: .78; transform: translate(-50%, -50%) scale(.92); } }
 @keyframes ski-route {
   0% { left: 35%; bottom: -28%; transform: translateX(-50%) scale(1.058) scaleX(-1) rotate(-1deg); }
   52% { left: 20%; bottom: 18%; transform: translateX(-50%) scale(.5) scaleX(-1) rotate(-1deg); }

@@ -123,11 +123,6 @@ export function Experience() {
               style={{ backgroundImage: `url(${assetUrl("/characters/hero-walk-v1.png")})` }}
             />
           </span>
-          {scene.id === "family-trail" && (
-            <span className="traveller__lantern" aria-hidden="true">
-              <span className="traveller__lantern-light" />
-            </span>
-          )}
         </div>
       )}
 
@@ -193,7 +188,7 @@ export function Experience() {
         >
           <span
             className="runner__sprite"
-            style={{ backgroundImage: `url(${assetUrl("/characters/papa-runner-cycle-v3.png")})` }}
+            style={{ backgroundImage: `url(${assetUrl("/characters/papa-runner-cycle-v5.png")})` }}
             aria-hidden="true"
           />
         </div>
