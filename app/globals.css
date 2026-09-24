@@ -170,10 +170,10 @@ button { color: inherit; }
 }
 @keyframes traveller-steps { to { transform: translateX(-100%); } }
 @keyframes ski-route {
-  0% { left: 35%; bottom: -28%; transform: translateX(-50%) scale(.92) scaleX(-1) rotate(-1deg); }
+  0% { left: 35%; bottom: -28%; transform: translateX(-50%) scale(1.058) scaleX(-1) rotate(-1deg); }
   52% { left: 20%; bottom: 18%; transform: translateX(-50%) scale(.5) scaleX(-1) rotate(-1deg); }
   52.01% { left: 20%; bottom: 18%; transform: translateX(-50%) scale(.5) scaleX(1) rotate(-1deg); }
-  100% { left: 43%; bottom: 35%; transform: translateX(-50%) scale(.2) scaleX(1) rotate(-1deg); }
+  100% { left: 43%; bottom: 35%; transform: translateX(-50%) scale(.4) scaleX(1) rotate(-1deg); }
 }
 @keyframes skier-frames {
   0%, 100% { background-position: 0 0; transform: translateY(0); }
@@ -267,7 +267,7 @@ button { color: inherit; }
   .scene__art { transform: scale(1.035); }
   .traveller { left: 54%; bottom: 51.5%; transform: scale(.31); }
   .traveller__sprite { animation: none !important; transform: none; }
-  .skier { left: 43%; bottom: 35%; transform: translateX(-50%) scale(.2) rotate(-1deg); }
+  .skier { left: 43%; bottom: 35%; transform: translateX(-50%) scale(.4) rotate(-1deg); }
   .skier__sprite { animation: none !important; background-position: 66.666% 0; }
   .swimmer { left: 67%; bottom: 2%; transform: scale(.72) rotate(-2deg); }
   .swimmer__sprite { animation: none !important; background-position: 100% 0; }
