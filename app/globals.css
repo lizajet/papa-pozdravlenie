@@ -190,9 +190,9 @@ button { color: inherit; }
   50% { opacity: .78; transform: translateY(-1px) scaleX(1.06) rotate(-8deg); }
 }
 @keyframes swim-route {
-  0% { left: -7%; bottom: 2%; transform: scale(.72) rotate(-2deg); }
-  52% { left: 30%; bottom: 2%; transform: scale(.72) rotate(-1deg); }
-  100% { left: 67%; bottom: 2%; transform: scale(.72) rotate(-2deg); }
+  0% { left: -7%; bottom: 2%; transform: scale(.936) rotate(-2deg); }
+  52% { left: 30%; bottom: 2%; transform: scale(.936) rotate(-1deg); }
+  100% { left: 67%; bottom: 2%; transform: scale(.936) rotate(-2deg); }
 }
 @keyframes swimmer-frames {
   0%, 100% { background-position: 0 0; transform: translateY(1px); }
@@ -269,7 +269,7 @@ button { color: inherit; }
   .traveller__sprite { animation: none !important; transform: none; }
   .skier { left: 43%; bottom: 35%; transform: translateX(-50%) scale(.4) rotate(-1deg); }
   .skier__sprite { animation: none !important; background-position: 66.666% 0; }
-  .swimmer { left: 67%; bottom: 2%; transform: scale(.72) rotate(-2deg); }
+  .swimmer { left: 67%; bottom: 2%; transform: scale(.936) rotate(-2deg); }
   .swimmer__sprite { animation: none !important; background-position: 100% 0; }
   .cyclist { right: 72%; bottom: 42%; transform: scale(.94) scaleX(-1) rotate(-3deg); }
   .cyclist__sprite { animation: none !important; background-position: 100% 0; }
