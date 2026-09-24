@@ -209,9 +209,11 @@ export function Experience() {
           <div className="letter__content">
             <p className="eyebrow">{scene.eyebrow}</p>
             <h1 id="letter-title">{scene.title}</h1>
-            <div className="letter__text">
-              {scene.body?.split("\n\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            </div>
+            {scene.body && (
+              <div className="letter__text">
+                {scene.body.split("\n\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
+            )}
             <p className="letter__sign">{scene.sign}</p>
           </div>
           <ContinueButton onClick={continueStory}>{scene.action}</ContinueButton>
