@@ -103,7 +103,7 @@ export const scenes: Scene[] = [
     title: "Туда, где снег становится пеной",
     body: "За волнами уже виден берег — и Тая машет папе рукой.",
     action: "Доплыть до берега",
-    art: "/art/taya-australia-trail-v1.png",
+    art: "/art/taya-australia-trail-v2.png",
     traveller: "swimmer",
     travellerLabel: "Папа плывёт к Тае, которая машет ему с берега",
   },
