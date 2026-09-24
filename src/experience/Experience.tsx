@@ -110,18 +110,24 @@ export function Experience() {
 
       {scene.kind === "travel" && scene.traveller === "walker" && (
         <div
-          className="traveller"
+          className={`traveller${scene.id === "family-trail" ? " traveller--family" : ""}`}
           role="img"
           aria-label={scene.travellerLabel}
           onAnimationEnd={(event) => {
             if (event.target === event.currentTarget) dispatch({ type: "CONTINUE" });
           }}
         >
-          <span
-            className="traveller__sprite"
-            style={{ backgroundImage: `url(${assetUrl("/characters/hero-walk-v1.png")})` }}
-            aria-hidden="true"
-          />
+          <span className="traveller__sprite-window" aria-hidden="true">
+            <span
+              className="traveller__sprite"
+              style={{ backgroundImage: `url(${assetUrl("/characters/hero-walk-v1.png")})` }}
+            />
+          </span>
+          {scene.id === "family-trail" && (
+            <span className="traveller__lantern" aria-hidden="true">
+              <span className="traveller__lantern-light" />
+            </span>
+          )}
         </div>
       )}
 
