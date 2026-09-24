@@ -41,6 +41,8 @@ export const scenes: Scene[] = [
     author: "Лиза",
     portrait: "/people/liza-portrait-v1.jpg",
     sign: "Люблю, Лиза",
+    notePlace: "Уральская тропа · 05:47",
+    noteMark: "Рассвет",
   },
   {
     id: "liza-achievements",
@@ -84,6 +86,8 @@ export const scenes: Scene[] = [
     author: "Соня",
     portrait: "/people/sonya-portrait-v1.jpg",
     sign: "Люблю, Соня",
+    notePlace: "Снежный лес · −12°",
+    noteMark: "По лыжне",
   },
   {
     id: "sonya-achievements",
@@ -127,6 +131,8 @@ export const scenes: Scene[] = [
     author: "Тая",
     portrait: "/people/taya-portrait-v1.jpg",
     sign: "Люблю, Тая",
+    notePlace: "Австралийский берег · 12:20",
+    noteMark: "С моря",
   },
   {
     id: "taya-achievements",
@@ -170,6 +176,8 @@ export const scenes: Scene[] = [
     author: "Фадей",
     portrait: "/people/fadey-portrait-v1.jpg",
     sign: "Люблю, Фадей",
+    notePlace: "Красная Поляна · 15:40",
+    noteMark: "Высота",
   },
   {
     id: "fadey-achievements",
@@ -213,6 +221,8 @@ export const scenes: Scene[] = [
     author: "Ярик",
     portrait: "/people/yarik-portrait-v1.jpg",
     sign: "Люблю, Ярик",
+    notePlace: "Дюны · закат",
+    noteMark: "Финиш",
   },
   {
     id: "yarik-achievements",

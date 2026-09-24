@@ -44,6 +44,8 @@ export type Scene = {
   author?: "Лиза" | "Соня" | "Тая" | "Фадей" | "Ярик";
   portrait?: string;
   sign?: string;
+  notePlace?: string;
+  noteMark?: string;
   achievementIds?: string[];
   traveller?: "walker" | "skier" | "swimmer" | "cyclist" | "runner";
   travellerLabel?: string;

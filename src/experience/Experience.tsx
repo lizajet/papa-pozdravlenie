@@ -239,6 +239,11 @@ export function Experience() {
 
       {scene.kind === "travel" ? null : scene.kind === "message" ? (
         <section className="letter" aria-labelledby="letter-title">
+          <div className="letter__weather" aria-hidden="true" />
+          <div className="letter__ephemera" aria-hidden="true">
+            <span className="letter__route">{scene.notePlace}</span>
+            <span className="letter__mark">{scene.noteMark}</span>
+          </div>
           <div
             className="letter__portrait"
             style={{ backgroundImage: `url(${assetUrl(scene.portrait ?? "")})` }}
