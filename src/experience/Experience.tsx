@@ -27,20 +27,28 @@ export function Experience() {
     url: string;
     status: "loading" | "ready" | "error";
   } | null>(null);
+  const [loaderDetails, setLoaderDetails] = useState<{ url: string; attempt: number } | null>(null);
   const musicRef = useRef<HTMLAudioElement>(null);
   const scene = scenes[state.sceneIndex];
   const sceneArtUrl = assetUrl(scene.art);
   const sceneArtStatus = artStatus?.url === sceneArtUrl ? artStatus.status : "loading";
   const sceneReady = sceneArtStatus === "ready";
+  const showLoaderDetails = loaderDetails?.url === sceneArtUrl && loaderDetails.attempt === artLoadAttempt;
 
   useEffect(() => {
     let cancelled = false;
     const image = new Image();
+    const detailsTimeout = window.setTimeout(() => {
+      if (!cancelled) setLoaderDetails({ url: sceneArtUrl, attempt: artLoadAttempt });
+    }, 1500);
 
     setArtStatus({ url: sceneArtUrl, status: "loading" });
     image.onload = () => {
       void image.decode().catch(() => undefined).then(() => {
-        if (!cancelled) setArtStatus({ url: sceneArtUrl, status: "ready" });
+        if (!cancelled) {
+          window.clearTimeout(detailsTimeout);
+          setArtStatus({ url: sceneArtUrl, status: "ready" });
+        }
       });
     };
     image.onerror = () => {
@@ -50,6 +58,7 @@ export function Experience() {
 
     return () => {
       cancelled = true;
+      window.clearTimeout(detailsTimeout);
       image.onload = null;
       image.onerror = null;
     };
@@ -63,6 +72,7 @@ export function Experience() {
   }, []);
 
   const continueStory = useCallback(() => {
+    setLoaderDetails(null);
     if (scene.id === "hall-of-fame") {
       dispatch({ type: "RESTART" });
       return;
@@ -130,20 +140,24 @@ export function Experience() {
         aria-hidden="true"
       />
       {!sceneReady && (
-        <section className="scene-loader" role={sceneArtStatus === "error" ? "alert" : "status"} aria-live="polite">
-          <span className="scene-loader__mark" aria-hidden="true">✦</span>
-          {sceneArtStatus === "error" ? (
-            <>
-              <p>Фон не загрузился</p>
-              <button type="button" onClick={() => setArtLoadAttempt((attempt) => attempt + 1)}>
-                Попробовать ещё раз
-              </button>
-            </>
-          ) : (
-            <>
-              <p>Готовим следующую сцену</p>
-              <span className="scene-loader__dots" aria-hidden="true"><i /><i /><i /></span>
-            </>
+        <section className="scene-loader">
+          {showLoaderDetails && (
+            <div className="scene-loader__content" role={sceneArtStatus === "error" ? "alert" : "status"} aria-live="polite">
+              <span className="scene-loader__mark" aria-hidden="true">✦</span>
+              {sceneArtStatus === "error" ? (
+                <>
+                  <p>Фон не загрузился</p>
+                  <button type="button" onClick={() => setArtLoadAttempt((attempt) => attempt + 1)}>
+                    Попробовать ещё раз
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p>Готовим следующую сцену</p>
+                  <span className="scene-loader__dots" aria-hidden="true"><i /><i /><i /></span>
+                </>
+              )}
+            </div>
           )}
         </section>
       )}
