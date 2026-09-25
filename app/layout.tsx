@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Один большой папин день",
-  description: "Интерактивная семейная история для Андрея",
+  description: "Интерактивная семейная история для папы",
 };
 
 export const viewport: Viewport = {

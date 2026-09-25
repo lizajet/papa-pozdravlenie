@@ -103,7 +103,7 @@ export function Experience() {
       <div className="scene__grain" aria-hidden="true" />
       {scene.kind !== "travel" && (
         <header className="scene__header">
-          <span>Андрей · один большой день</span>
+          <span>Папа · один большой день</span>
           <span>{String(state.sceneIndex + 1).padStart(2, "0")} / {String(scenes.length).padStart(2, "0")}</span>
         </header>
       )}
