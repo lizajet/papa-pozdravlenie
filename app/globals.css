@@ -88,8 +88,12 @@ button { color: inherit; }
 .scene-copy { position: absolute; z-index: 2; left: max(6vw, calc(24px + env(safe-area-inset-left))); bottom: max(7vh, calc(20px + env(safe-area-inset-bottom))); width: min(470px, 48vw); animation: copy-in .9s var(--ease) both; }
 .scene-copy h1 { display: flex; flex-direction: column; margin: 0 0 10px; font: italic 500 clamp(30px, 5.2vw, 66px)/.9 var(--story); letter-spacing: -.055em; text-shadow: 0 3px 24px #07181dcc; }
 .scene-copy__body { width: min(420px, 100%); margin: 0 0 16px; color: #fffaf0e8; font: 400 clamp(12px, 1.55vw, 17px)/1.45 var(--story); text-shadow: 0 2px 14px #07181d; }
-.scene-copy--meeting { width: min(430px, 45vw); padding: 17px 18px; border: 1px solid #fff6e57a; border-radius: 18px; background: #102c33cc; backdrop-filter: blur(12px); }
-.scene-copy--meeting h1 { font-size: clamp(23px, 3.7vw, 44px); }
+.scene-copy--meeting { width: min(360px, 38vw); padding: 12px 14px; border: 1px solid #fff6e57a; border-radius: 16px; background: #102c33cc; backdrop-filter: blur(12px); }
+.scene-copy--meeting .eyebrow { margin-bottom: 6px; }
+.scene-copy--meeting h1 { margin-bottom: 7px; font-size: clamp(22px, 3.1vw, 36px); }
+.scene-copy--meeting .scene-copy__body { margin-bottom: 11px; line-height: 1.35; }
+.scene-copy--meeting .continue-button { min-width: 190px; min-height: 48px; }
+.scene-copy--meeting .continue-button__arrow { width: 36px; height: 36px; }
 
 .continue-button { display: inline-flex; align-items: center; justify-content: space-between; min-width: 210px; min-height: 52px; padding: 5px 7px 5px 20px; border: 1px solid #fff6e599; border-radius: 29px; background: var(--ink); color: var(--cream); box-shadow: 0 8px 24px #07181d55; cursor: pointer; font-size: clamp(11px, 1.4vw, 14px); font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; }
 .continue-button__arrow { display: grid; place-items: center; width: 40px; height: 40px; margin-left: 14px; border-radius: 50%; background: var(--gold); color: var(--ink); font-size: 20px; transition: transform .2s ease; }
