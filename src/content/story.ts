@@ -241,7 +241,7 @@ export const scenes: Scene[] = [
     action: "Войти в дом",
     art: "/art/final-evening-trail-v1.jpg",
     traveller: "walker",
-    travellerLabel: "Папа идёт по вечерней тропе к освещённому дому",
+    travellerLabel: "Папа с фонарём идёт по вечерней тропе к освещённому дому",
   },
   {
     id: "family-reunion",
