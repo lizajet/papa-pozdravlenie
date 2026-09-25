@@ -45,6 +45,17 @@ button { color: inherit; }
 
 .scene__art, .scene__vignette, .scene__grain { position: absolute; inset: 0; }
 .scene__art { background-position: center; background-size: cover; animation: camera-drift 16s ease-in-out both; transform: scale(1.035); }
+.scene--loading .scene__art { animation-play-state: paused; }
+.scene-loader { position: absolute; z-index: 50; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 54%, #1d4b4e 0, var(--night) 38%, #081a20 100%); text-align: center; }
+.scene-loader::before { content: ""; position: absolute; inset: 0; opacity: .12; background-image: radial-gradient(#fff 0.7px, transparent 0.7px); background-size: 7px 7px; }
+.scene-loader > * { position: relative; }
+.scene-loader__mark { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #f4b55f88; border-radius: 50%; color: var(--gold); animation: loader-glow 1.6s ease-in-out infinite; }
+.scene-loader p { margin: 12px 0 9px; color: #fff6e5d9; font: italic 500 clamp(16px, 2.3vw, 23px)/1.2 var(--story); }
+.scene-loader button { min-height: 46px; padding: 0 20px; border: 1px solid #fff6e599; border-radius: 24px; background: var(--cream); color: var(--ink); cursor: pointer; font-weight: 700; }
+.scene-loader__dots { display: flex; gap: 6px; height: 8px; }
+.scene-loader__dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: loader-dot 1.1s ease-in-out infinite; }
+.scene-loader__dots i:nth-child(2) { animation-delay: .14s; }
+.scene-loader__dots i:nth-child(3) { animation-delay: .28s; }
 .scene__vignette { background: linear-gradient(90deg, rgba(4,18,21,.72), transparent 52%, rgba(4,18,21,.16)), linear-gradient(0deg, rgba(4,18,21,.64), transparent 56%); }
 .scene-kind--meeting .scene__vignette { background: linear-gradient(90deg, rgba(4,18,21,.82), transparent 58%), linear-gradient(0deg, rgba(4,18,21,.52), transparent 65%); }
 .scene-kind--message .scene__art, .scene-kind--achievements .scene__art { filter: blur(5px) brightness(.5); transform: scale(1.08); }
@@ -233,6 +244,8 @@ button { color: inherit; }
 .orientation-gate { display: none; }
 
 @keyframes camera-drift { from { transform: scale(1.035) translate3d(-.5%, 0, 0); } to { transform: scale(1.08) translate3d(.7%, -.4%, 0); } }
+@keyframes loader-glow { 0%, 100% { opacity: .55; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.06); } }
+@keyframes loader-dot { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
 @keyframes copy-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 @keyframes letter-in { from { opacity: 0; transform: translateY(18px) scale(.97) rotate(calc(var(--letter-tilt) - 1deg)); } to { opacity: 1; transform: rotate(var(--letter-tilt)); } }
 @keyframes medal-in { from { opacity: 0; transform: translateY(22px) rotate(-2deg); } to { opacity: 1; transform: none; } }

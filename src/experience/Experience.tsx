@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { achievements, scenes } from "@/content/story";
 import { ContinueButton } from "@/components/ContinueButton";
 import { OrientationGate } from "@/components/OrientationGate";
@@ -22,8 +22,38 @@ function assetUrl(path: string) {
 
 export function Experience() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [artLoadAttempt, setArtLoadAttempt] = useState(0);
+  const [artStatus, setArtStatus] = useState<{
+    url: string;
+    status: "loading" | "ready" | "error";
+  } | null>(null);
   const musicRef = useRef<HTMLAudioElement>(null);
   const scene = scenes[state.sceneIndex];
+  const sceneArtUrl = assetUrl(scene.art);
+  const sceneArtStatus = artStatus?.url === sceneArtUrl ? artStatus.status : "loading";
+  const sceneReady = sceneArtStatus === "ready";
+
+  useEffect(() => {
+    let cancelled = false;
+    const image = new Image();
+
+    setArtStatus({ url: sceneArtUrl, status: "loading" });
+    image.onload = () => {
+      void image.decode().catch(() => undefined).then(() => {
+        if (!cancelled) setArtStatus({ url: sceneArtUrl, status: "ready" });
+      });
+    };
+    image.onerror = () => {
+      if (!cancelled) setArtStatus({ url: sceneArtUrl, status: "error" });
+    };
+    image.src = sceneArtUrl;
+
+    return () => {
+      cancelled = true;
+      image.onload = null;
+      image.onerror = null;
+    };
+  }, [artLoadAttempt, sceneArtUrl]);
 
   const startMusic = useCallback(() => {
     const music = musicRef.current;
@@ -93,12 +123,32 @@ export function Experience() {
   return (
     <>
       <audio ref={musicRef} src={assetUrl("/audio/ya-budu-tam.mp3")} loop preload="auto" />
-      <main className={`experience scene scene--${scene.id} scene-kind--${scene.kind}`}>
+      <main className={`experience scene scene--${scene.id} scene-kind--${scene.kind}${sceneReady ? "" : " scene--loading"}`}>
       <div
         className="scene__art"
-        style={{ backgroundImage: `url(${assetUrl(scene.art)})` }}
+        style={{ backgroundImage: `url(${sceneArtUrl})` }}
         aria-hidden="true"
       />
+      {!sceneReady && (
+        <section className="scene-loader" role={sceneArtStatus === "error" ? "alert" : "status"} aria-live="polite">
+          <span className="scene-loader__mark" aria-hidden="true">✦</span>
+          {sceneArtStatus === "error" ? (
+            <>
+              <p>Фон не загрузился</p>
+              <button type="button" onClick={() => setArtLoadAttempt((attempt) => attempt + 1)}>
+                Попробовать ещё раз
+              </button>
+            </>
+          ) : (
+            <>
+              <p>Готовим следующую сцену</p>
+              <span className="scene-loader__dots" aria-hidden="true"><i /><i /><i /></span>
+            </>
+          )}
+        </section>
+      )}
+      {sceneReady && (
+        <>
       <div className="scene__vignette" aria-hidden="true" />
       <div className="scene__grain" aria-hidden="true" />
       {scene.kind !== "travel" && (
@@ -285,6 +335,8 @@ export function Experience() {
             <h2 id="achievement-title">{selectedAchievement.title}</h2>
             <p>{selectedAchievement.description}</p>
           </div>
+        </>
+      )}
         </>
       )}
 
