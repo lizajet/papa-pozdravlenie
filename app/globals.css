@@ -18,7 +18,7 @@ body { color: var(--cream); font-family: var(--interface); overflow: hidden; }
 button, input { font: inherit; }
 button { color: inherit; }
 
-.preflight, .experience { position: relative; width: 100vw; height: 100svh; min-height: 320px; overflow: hidden; }
+.preflight, .experience { position: relative; width: 100vw; height: 100svh; overflow: hidden; }
 
 .preflight {
   display: grid;
@@ -44,8 +44,7 @@ button { color: inherit; }
 .start-button:active { transform: scale(.97); }
 
 .scene__art, .scene__vignette, .scene__grain { position: absolute; inset: 0; }
-.scene__art { background-position: center; background-size: cover; animation: camera-drift 16s ease-in-out both; transform: scale(1.035); }
-.scene--loading .scene__art { animation-play-state: paused; }
+.scene__art { background-position: center; background-size: contain; background-repeat: no-repeat; }
 .scene-loader { position: absolute; z-index: 50; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 54%, #1d4b4e 0, var(--night) 38%, #081a20 100%); text-align: center; }
 .scene-loader::before { content: ""; position: absolute; inset: 0; opacity: .12; background-image: radial-gradient(#fff 0.7px, transparent 0.7px); background-size: 7px 7px; }
 .scene-loader > * { position: relative; }
@@ -59,8 +58,7 @@ button { color: inherit; }
 .scene-loader__dots i:nth-child(3) { animation-delay: .28s; }
 .scene__vignette { background: linear-gradient(90deg, rgba(4,18,21,.72), transparent 52%, rgba(4,18,21,.16)), linear-gradient(0deg, rgba(4,18,21,.64), transparent 56%); }
 .scene-kind--meeting .scene__vignette { background: linear-gradient(90deg, rgba(4,18,21,.82), transparent 58%), linear-gradient(0deg, rgba(4,18,21,.52), transparent 65%); }
-.scene-kind--message .scene__art, .scene-kind--achievements .scene__art { filter: blur(5px) brightness(.5); transform: scale(1.08); }
-.scene--sonya-trail .scene__art { background-position: 50% 50%; }
+.scene-kind--message .scene__art, .scene-kind--achievements .scene__art { filter: blur(5px) brightness(.5); }
 .scene:is(.scene--sonya-trail, .scene--sonya-meeting, .scene--sonya-message, .scene--sonya-achievements) .scene__vignette {
   background:
     linear-gradient(90deg, rgba(4,18,21,.3), transparent 42%, rgba(4,18,21,.06)),
@@ -71,20 +69,16 @@ button { color: inherit; }
     linear-gradient(90deg, rgba(5,35,45,.48), transparent 48%, rgba(5,35,45,.04)),
     linear-gradient(0deg, rgba(5,35,45,.32), transparent 54%);
 }
-.scene--taya-meeting .scene__art { background-position: 50% 48%; }
 .scene:is(.scene--fadey-trail, .scene--fadey-meeting, .scene--fadey-message, .scene--fadey-achievements) .scene__vignette {
   background:
     linear-gradient(90deg, rgba(13,31,30,.58), transparent 48%, rgba(20,39,30,.04)),
     linear-gradient(0deg, rgba(45,35,20,.35), transparent 58%);
 }
-.scene--fadey-meeting .scene__art { background-position: 55% 50%; }
 .scene:is(.scene--yarik-trail, .scene--yarik-meeting, .scene--yarik-message, .scene--yarik-achievements) .scene__vignette {
   background:
     linear-gradient(90deg, rgba(39,24,27,.64), transparent 50%, rgba(48,27,29,.08)),
     linear-gradient(0deg, rgba(45,25,23,.42), transparent 60%);
 }
-.scene--yarik-trail .scene__art { background-position: 50% 53%; }
-.scene--yarik-meeting .scene__art { background-position: 52% 50%; }
 .scene--family-trail .scene__vignette { background: linear-gradient(90deg, rgba(7, 18, 31, .42), transparent 55%), linear-gradient(0deg, rgba(7, 18, 31, .36), transparent 56%); }
 .scene:is(.scene--family-reunion, .scene--family-moment) .scene__vignette { background: linear-gradient(90deg, rgba(19, 21, 27, .64), transparent 58%), linear-gradient(0deg, rgba(19, 21, 27, .28), transparent 55%); }
 .scene--family-reunion .scene-copy, .scene--family-moment .scene-copy { left: max(5vw, calc(20px + env(safe-area-inset-left))); bottom: max(4vh, env(safe-area-inset-bottom)); display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto auto; column-gap: 18px; width: min(760px, 90vw); padding: 10px 15px; border: 1px solid rgba(255, 246, 229, .52); border-radius: 18px; background: rgba(16, 44, 51, .86); backdrop-filter: blur(9px); }
@@ -92,7 +86,7 @@ button { color: inherit; }
 .scene--family-reunion .scene-copy h1, .scene--family-moment .scene-copy h1 { margin-bottom: 4px; font-size: clamp(25px, 3.3vw, 36px); }
 .scene--family-reunion .scene-copy__body, .scene--family-moment .scene-copy__body { margin: 0; font-size: clamp(11px, 1.3vw, 14px); line-height: 1.28; }
 .scene--family-reunion .scene-copy .continue-button, .scene--family-moment .scene-copy .continue-button { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
-.scene--hall-of-fame .scene__art { filter: blur(8px) brightness(.28); transform: scale(1.08); }
+.scene--hall-of-fame .scene__art { filter: blur(8px) brightness(.28); }
 .scene--hall-of-fame .scene__vignette { background: linear-gradient(90deg, rgba(11, 28, 33, .75), rgba(11, 28, 33, .34)); }
 .scene__grain { pointer-events: none; opacity: .1; mix-blend-mode: soft-light; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); }
 .scene__header { position: absolute; z-index: 3; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: calc(14px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) 0 calc(22px + env(safe-area-inset-left)); color: #fff6e5cc; font-size: clamp(8px, 1.15vw, 11px); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
@@ -244,7 +238,6 @@ button { color: inherit; }
 
 .orientation-gate { display: none; }
 
-@keyframes camera-drift { from { transform: scale(1.035) translate3d(-.5%, 0, 0); } to { transform: scale(1.08) translate3d(.7%, -.4%, 0); } }
 @keyframes loader-glow { 0%, 100% { opacity: .55; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.06); } }
 @keyframes loader-dot { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
 @keyframes copy-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
@@ -361,7 +354,6 @@ button { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
-  .scene__art { transform: scale(1.035); }
   .traveller { left: 54%; bottom: 51.5%; transform: scale(.31); }
   .traveller--family { left: 66%; bottom: 51%; transform: translateX(-50%) scale(.2); }
   .traveller__sprite { animation: none !important; transform: none; }
