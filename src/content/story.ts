@@ -215,6 +215,7 @@ export const scenes: Scene[] = [
     kind: "message",
     eyebrow: "Ярик · для папы",
     title: "С днём рождения, папа!",
+    body: "Папа, я тебя очень-очень люблю! Желаю тебе быть здоровым и сильным. Желаю тебе всегда быть первым. Я тебя люблю, чмок-чмок",
     action: "Обнять Ярика",
     art: "/art/yarik-desert-meeting-v3.png",
     author: "Ярик",
